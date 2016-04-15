@@ -7,6 +7,7 @@ import java.text.DateFormatSymbols;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.awt.FlowLayout;
 
 
 /**
@@ -25,6 +26,9 @@ public class HomeworkPlanner extends JFrame
     private String months[] = symbols.getMonths();
     private JComboBox<String> monthList;
     private ArrayList<JButton> grid = new ArrayList<JButton>();
+    private DayFrame df = new DayFrame();
+    private ActionListener butl = new DayListener();
+    private FlowLayout lay = new FlowLayout();
     
     /**
      * Constructor for objects of class HomeworkPlanner
@@ -32,11 +36,12 @@ public class HomeworkPlanner extends JFrame
     public HomeworkPlanner()
     {
         this.setSize( FRAME_WIDTH, FRAME_HEIGHT );
+        this.setLayout( this.lay );
         
-        monthList = new JComboBox<String>( months );
-        this.add( monthList );
+        monthList = new JComboBox<String>( this.months );
+        this.add( this.monthList );
         
-        ActionListener monl = new ComboBoxListener();
+        ActionListener monl = new MonthListener();
         this.monthList.addActionListener( monl );
         
         createCalendar();
@@ -68,8 +73,9 @@ public class HomeworkPlanner extends JFrame
         pane.setLayout( new GridLayout( 7, 4 ) );
         for( int i = 0; i < 49; i++ )
         {
-            day = new JButton();
-            grid.add( day );
+            this.day = new JButton();
+            this.day.addActionListener( butl );
+            this.grid.add( day );
             pane.add( day );
         }
     }
@@ -82,68 +88,78 @@ public class HomeworkPlanner extends JFrame
      */
     public void updateCalendar( int days )
     {
-        for( int i = 0; i < grid.size(); i++ )
+        for( int i = 0; i < this.grid.size(); i++ )
         {
-            grid.get( i ).setText( "" );
+            this.grid.get( i ).setText( "" );
         }
         for( int i = 0; i < days; i++ )
         {
-            grid.get( i ).setText( Integer.toString( i + 1 ) );
+            this.grid.get( i ).setText( Integer.toString( i + 1 ) );
         }
     }
 
     
+    class DayListener implements ActionListener
+    {
+        public void actionPerformed( ActionEvent event )
+        {
+            JButton bday = (JButton)event.getSource();
+            df.setVisible( true );
+            df.updateDay( monthList.getSelectedItem().toString() ,bday.getText() );
+        }
+    }
     
-    class ComboBoxListener implements ActionListener
+    
+    class MonthListener implements ActionListener
     {
         public void actionPerformed( ActionEvent event )
         {
             JComboBox cb = (JComboBox)event.getSource();
-            if( cb.getSelectedItem() == "January"  )
+            if( cb.getSelectedItem().toString() == "January"  )
             {
                 updateCalendar( 31 );
             }
-            else if( cb.getSelectedItem() == "February" )
+            else if( cb.getSelectedItem().toString() == "February" )
             {
                 updateCalendar( 29 );
             }
-            else if( cb.getSelectedItem() == "March" )
+            else if( cb.getSelectedItem().toString() == "March" )
             {
                 updateCalendar( 31 );
             }
-            else if( cb.getSelectedItem() == "April" )
+            else if( cb.getSelectedItem().toString() == "April" )
             {
                 updateCalendar( 30 );
             }
-            else if( cb.getSelectedItem() == "May" )
+            else if( cb.getSelectedItem().toString() == "May" )
             {
                 updateCalendar( 31 );
             }
-            else if( cb.getSelectedItem() == "June" )
+            else if( cb.getSelectedItem().toString() == "June" )
             {
                 updateCalendar( 30 );
             }
-            else if( cb.getSelectedItem() == "July" )
+            else if( cb.getSelectedItem().toString() == "July" )
             {
                 updateCalendar( 31 );
             }
-            else if( cb.getSelectedItem() == "August" )
+            else if( cb.getSelectedItem().toString() == "August" )
             {
                 updateCalendar( 31 );
             }
-            else if( cb.getSelectedItem() == "September" )
+            else if( cb.getSelectedItem().toString() == "September" )
             {
                 updateCalendar( 30 );
             }
-            else if( cb.getSelectedItem() == "October" )
+            else if( cb.getSelectedItem().toString() == "October" )
             {
                 updateCalendar( 31 );
             }
-            else if( cb.getSelectedItem() == "November" )
+            else if( cb.getSelectedItem().toString() == "November" )
             {
                 updateCalendar( 30 );
             }
-            else if( cb.getSelectedItem() == "December" )
+            else if( cb.getSelectedItem().toString() == "December" )
             {
                 updateCalendar( 31 );
             }
