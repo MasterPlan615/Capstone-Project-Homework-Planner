@@ -6,6 +6,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.util.Scanner;
 import java.io.File;
+import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
@@ -28,7 +29,9 @@ public class DayFrame extends JFrame
     private JTextArea notes;
     private JScrollPane sp;
     private File notesFile;
+    private PrintWriter printw;
     private Scanner in;
+    private Scanner out;
     private ActionListener notl = new NoteListener();
     
     
@@ -40,23 +43,6 @@ public class DayFrame extends JFrame
         this.setSize( FRAME_WIDTH, FRAME_HEIGHT );
         this.setLayout( lay );
         
-        try
-        {
-            notesFile = new File( "notesFile.txt" );
-            try
-            {
-                notesFile.createNewFile();
-            }
-            catch ( IOException a )
-            {
-                System.err.println( "IOException: " + a.getMessage() );
-            }
-            in = new Scanner( notesFile );
-        }
-        catch( FileNotFoundException e )
-        {
-            System.err.println( "FileNotFoundException: " + e.getMessage() );
-        }
         
         this.numday = new JLabel( " " );
         this.add( this.numday );
@@ -69,8 +55,36 @@ public class DayFrame extends JFrame
         notes.setEditable( false );
         this.add( this.notes );
         
+        
         ActionListener notl = new NoteListener();
         this.creno.addActionListener( notl );
+        
+        
+        try
+        {
+            notesFile = new File( "notesFile.txt" );
+            //try
+            //{
+            //    notesFile.createNewFile();
+            //}
+            //catch ( IOException a )
+            //{
+            //    System.err.println( "IOException: " + a.getMessage() );
+            //}
+            in = new Scanner( notesFile );
+            String update = "";
+            while( in.hasNext() )
+            {
+                update += in.next() + " ";
+            }
+            notes.setText( update );
+            notesFile.setWritable( false );
+        }
+        catch( FileNotFoundException e )
+        {
+            System.err.println( "FileNotFoundException: " + e.getMessage() );
+        }
+        
         
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         //this.pack();
@@ -88,14 +102,42 @@ public class DayFrame extends JFrame
         this.numday.setText( month + " " + day );
     }
     
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void updateNotes( String s )
+    {
+        notesFile.setWritable( true );
+        try
+        {
+            printw = new PrintWriter( "notesFile.txt" );
+            out = new Scanner( notesFile );
+        }
+        catch( FileNotFoundException e )
+        {
+            System.err.println( "FileNotFoundException: " + e.getMessage() );
+        }
+        printw.println( s );
+        String up = "";
+        while( out.hasNext() )
+        {
+            up += out.next() + " ";
+        }
+        notes.setText( up );
+        printw.close();
+        notesFile.setWritable( false );
+    }
     
     class NoteListener implements ActionListener
     {
-        public void actionPerformed( ActionEvent event )
+        public void actionPerformed( ActionEvent event ) 
         {
             JTextField newf = (JTextField)event.getSource();
             String usernotes = newf.getText();
-            notes.setText( usernotes );
+            updateNotes( usernotes );
         }
     }
 }
