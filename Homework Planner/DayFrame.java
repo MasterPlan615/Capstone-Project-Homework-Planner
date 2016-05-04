@@ -5,12 +5,14 @@ import java.awt.FlowLayout;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.io.File;
-import java.io.PrintWriter;
+import java.util.Scanner;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.FileWriter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,7 +33,7 @@ public class DayFrame extends JFrame
     private JTextArea notes;
     private JScrollPane sp;
     private File notesFile;
-    private PrintWriter printw;
+    private BufferedWriter buffwrit;
     private FileInputStream creek;
     private InputStreamReader canoe;
     private BufferedReader buff;
@@ -72,17 +74,22 @@ public class DayFrame extends JFrame
             try
             {
                 String update = "";
-                while( buff.read() != null )
+                Scanner in = new Scanner( notesFile );
+                while( in.hasNext() )
                 {
-                    update += buff.read();
+                    update += in.next();
                 }
+                //while( buff.readLine() != null )
+                //{
+                //    update += buff.readLine();
+                //}
                 notes.setText( update );
+                in.close();
             }
             catch ( IOException a )
             {
                 System.err.println( "IOException: " + a.getMessage() );
             }
-            notesFile.setWritable( false );
         }
         catch( FileNotFoundException e )
         {
@@ -114,32 +121,31 @@ public class DayFrame extends JFrame
      */
     public void updateNotes( String s )
     {
-        notesFile.setWritable( true );
         try
         {
-            printw = new PrintWriter( "notesFile.txt" );
-            printw.println( s );
-        }
-        catch( FileNotFoundException e )
-        {
-            System.err.println( "FileNotFoundException: " + e.getMessage() );
-        }
-        try
-        {
-            String newup = "";
-            while( buff.readLine() != null )
+            try
             {
-                newup += buff.readLine();
+                buffwrit = new BufferedWriter( new FileWriter( "notesFile.txt", true ) );
+                buffwrit.write( s );
             }
-            System.out.println( newup );
+            catch( FileNotFoundException e )
+            {
+                System.err.println( "FileNotFoundException: " + e.getMessage() );
+            }
+            String newup = "";
+            Scanner in = new Scanner( notesFile );
+            while( in.hasNext() )
+            {
+                newup += in.next();
+            }
             notes.setText( newup );
+            buffwrit.close();
+            in.close();
         }
         catch( IOException a )
         {
             System.err.println( "IOException: " + a.getMessage() );
         }
-        printw.close();
-        notesFile.setWritable( false );
     }
     
     class NoteListener implements ActionListener
