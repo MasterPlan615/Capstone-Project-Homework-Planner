@@ -4,9 +4,11 @@ import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
-import java.util.Scanner;
 import java.io.File;
 import java.io.PrintWriter;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
@@ -30,8 +32,9 @@ public class DayFrame extends JFrame
     private JScrollPane sp;
     private File notesFile;
     private PrintWriter printw;
-    private Scanner in;
-    private Scanner out;
+    private FileInputStream creek;
+    private InputStreamReader canoe;
+    private BufferedReader buff;
     private ActionListener notl = new NoteListener();
     
     
@@ -63,21 +66,22 @@ public class DayFrame extends JFrame
         try
         {
             notesFile = new File( "notesFile.txt" );
-            //try
-            //{
-            //    notesFile.createNewFile();
-            //}
-            //catch ( IOException a )
-            //{
-            //    System.err.println( "IOException: " + a.getMessage() );
-            //}
-            in = new Scanner( notesFile );
-            String update = "";
-            while( in.hasNext() )
+            creek = new FileInputStream( "notesFile.txt" );
+            canoe = new InputStreamReader( creek );
+            buff = new BufferedReader( canoe );
+            try
             {
-                update += in.next() + " ";
+                String update = "";
+                while( buff.read() != null )
+                {
+                    update += buff.read();
+                }
+                notes.setText( update );
             }
-            notes.setText( update );
+            catch ( IOException a )
+            {
+                System.err.println( "IOException: " + a.getMessage() );
+            }
             notesFile.setWritable( false );
         }
         catch( FileNotFoundException e )
@@ -114,19 +118,26 @@ public class DayFrame extends JFrame
         try
         {
             printw = new PrintWriter( "notesFile.txt" );
-            out = new Scanner( notesFile );
+            printw.println( s );
         }
         catch( FileNotFoundException e )
         {
             System.err.println( "FileNotFoundException: " + e.getMessage() );
         }
-        printw.println( s );
-        String up = "";
-        while( out.hasNext() )
+        try
         {
-            up += out.next() + " ";
+            String newup = "";
+            while( buff.readLine() != null )
+            {
+                newup += buff.readLine();
+            }
+            System.out.println( newup );
+            notes.setText( newup );
         }
-        notes.setText( up );
+        catch( IOException a )
+        {
+            System.err.println( "IOException: " + a.getMessage() );
+        }
         printw.close();
         notesFile.setWritable( false );
     }
