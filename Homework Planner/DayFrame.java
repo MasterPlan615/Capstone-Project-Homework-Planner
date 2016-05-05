@@ -1,6 +1,7 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JButton;
 import java.awt.FlowLayout;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
@@ -31,9 +32,11 @@ public class DayFrame extends JFrame
     private JTextField creno;
     private FlowLayout lay = new FlowLayout();
     private JTextArea notes;
+    private JButton clear;
     private JScrollPane sp;
     private File notesFile;
     private BufferedWriter buffwrit;
+    private BufferedWriter clearwrit;
     private FileInputStream creek;
     private InputStreamReader canoe;
     private BufferedReader buff;
@@ -60,31 +63,27 @@ public class DayFrame extends JFrame
         notes.setEditable( false );
         this.add( this.notes );
         
+        this.clear = new JButton( "Clear" );
+        this.add( this.clear );
+        
         
         ActionListener notl = new NoteListener();
         this.creno.addActionListener( notl );
         
+        ActionListener clel = new ClearListener();
+        this.clear.addActionListener( clel );
+        
         
         try
         {
-            notesFile = new File( "notesFile.txt" );
-            creek = new FileInputStream( "notesFile.txt" );
-            canoe = new InputStreamReader( creek );
-            buff = new BufferedReader( canoe );
+            this.notesFile = new File( "notesFile.txt" );
+            this.creek = new FileInputStream( "notesFile.txt" );
+            this.canoe = new InputStreamReader( this.creek );
+            this.buff = new BufferedReader( this.canoe );
             try
             {
-                String update = "";
-                Scanner in = new Scanner( notesFile );
-                while( in.hasNext() )
-                {
-                    update += in.next();
-                }
-                //while( buff.readLine() != null )
-                //{
-                //    update += buff.readLine();
-                //}
-                notes.setText( update );
-                in.close();
+                this.buffwrit = new BufferedWriter( new FileWriter( "notesFile.txt", true ) );
+                
             }
             catch ( IOException a )
             {
@@ -97,6 +96,7 @@ public class DayFrame extends JFrame
         }
         
         
+        updateNotes();
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         //this.pack();
         this.setVisible( false );
@@ -119,27 +119,44 @@ public class DayFrame extends JFrame
      * @param  y   a sample parameter for a method
      * @return     the sum of x and y
      */
-    public void updateNotes( String s )
+    public void changeNotes( String s )
     {
         try
         {
             try
             {
-                buffwrit = new BufferedWriter( new FileWriter( "notesFile.txt", true ) );
-                buffwrit.write( s );
+                this.buffwrit.write( s );
             }
             catch( FileNotFoundException e )
             {
                 System.err.println( "FileNotFoundException: " + e.getMessage() );
             }
+            this.buffwrit.flush();
+        }
+        catch( IOException a )
+        {
+            System.err.println( "IOException: " + a.getMessage() );
+        }
+    }
+
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void updateNotes()
+    {
+        try
+        {
             String newup = "";
             Scanner in = new Scanner( notesFile );
             while( in.hasNext() )
             {
-                newup += in.next();
+                newup += in.next() + " ";
             }
-            notes.setText( newup );
-            buffwrit.close();
+            this.notes.setText( newup );
             in.close();
         }
         catch( IOException a )
@@ -148,13 +165,51 @@ public class DayFrame extends JFrame
         }
     }
     
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void clearNotes()
+    {
+        try
+        {
+            try
+            {
+                this.clearwrit = new BufferedWriter( new FileWriter( "notesFile.txt" ) );
+                this.clearwrit.write( "" );
+            }
+            catch( FileNotFoundException e )
+            {
+                System.err.println( "FileNotFoundException: " + e.getMessage() );
+            }
+            this.notes.setText( "" );
+            this.clearwrit.flush();
+        }
+        catch( IOException a )
+        {
+            System.err.println( "IOException: " + a.getMessage() );
+        }
+    }
+
+    
     class NoteListener implements ActionListener
     {
         public void actionPerformed( ActionEvent event ) 
         {
             JTextField newf = (JTextField)event.getSource();
             String usernotes = newf.getText();
-            updateNotes( usernotes );
+            changeNotes( usernotes );
+            updateNotes();
+        }
+    }
+    
+    class ClearListener implements ActionListener
+    {
+        public void actionPerformed( ActionEvent event ) 
+        {
+            clearNotes();
         }
     }
 }
