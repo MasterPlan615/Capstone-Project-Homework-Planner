@@ -41,6 +41,8 @@ public class DayFrame extends JFrame
     private InputStreamReader canoe;
     private BufferedReader buff;
     private ActionListener notl = new NoteListener();
+    private String month;
+    private String day;
     
     
     /**
@@ -111,6 +113,8 @@ public class DayFrame extends JFrame
     public void updateDay( String month, String day )
     {
         this.numday.setText( month + " " + day );
+        this.month = month;
+        this.day = day;
     }
     
     /**
@@ -125,7 +129,8 @@ public class DayFrame extends JFrame
         {
             try
             {
-                this.buffwrit.write( s );
+                this.buffwrit.write( month + day + " " );
+                this.buffwrit.write( s + " " );
             }
             catch( FileNotFoundException e )
             {
