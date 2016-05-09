@@ -1,17 +1,17 @@
 #BlueJ class context
 comment0.params=
 comment0.target=DayFrame()
-comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ DayFrame\r\n
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ DayFrame.\r\n
 comment1.params=month\ day
 comment1.target=void\ updateDay(java.lang.String,\ java.lang.String)
-comment1.text=\r\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\r\n\r\n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\r\n
+comment1.text=\r\n\ Changes\ the\ displayed\ date\ on\ the\ day\ page\ as\ well\ as\ sets\ the\ day\ and\ month\ to\ variables.\r\n\r\n\ @param\ \ month\ \ \ the\ selected\ month\r\n\ @param\ \ day\ \ \ the\ selected\ day\r\n
 comment2.params=s
 comment2.target=void\ changeNotes(java.lang.String)
-comment2.text=\r\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\r\n\r\n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\r\n
+comment2.text=\r\n\ Writes\ the\ note\ to\ the\ file\ notesFile.txt.\r\n\r\n\ @param\ \ s\ \ \ the\ note\ to\ be\ written\ to\ the\ file\r\n
 comment3.params=
 comment3.target=void\ updateNotes()
-comment3.text=\r\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\r\n\r\n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\r\n
+comment3.text=\r\n\ Reads\ the\ file\ notesFile.txt\ and\ prints\ the\ note\ to\ the\ text\ field.\r\n\r\n
 comment4.params=
 comment4.target=void\ clearNotes()
-comment4.text=\r\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\r\n\r\n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\r\n
+comment4.text=\r\n\ Clears\ both\ the\ file\ notesFile.txt\ and\ the\ text\ field\ of\ all\ notes.\r\n\r\n
 numComments=5

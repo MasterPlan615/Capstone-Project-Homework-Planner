@@ -19,7 +19,7 @@ import java.awt.event.ActionListener;
 
 
 /**
- * Represents a specific day and the hours in it, to allow events to be set to those times.
+ * Represents a specific day and keeps track of notes set to that day.
  * 
  * @Andrew Souhrada
  * @04/15/16
@@ -46,7 +46,7 @@ public class DayFrame extends JFrame
     
     
     /**
-     * Constructor for objects of class DayFrame
+     * Constructor for objects of class DayFrame.
      */
     public DayFrame()
     {
@@ -105,10 +105,10 @@ public class DayFrame extends JFrame
     }
     
     /**
-     * An example of a method - replace this comment with your own
+     * Changes the displayed date on the day page as well as sets the day and month to variables.
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param  month   the selected month
+     * @param  day   the selected day
      */
     public void updateDay( String month, String day )
     {
@@ -118,10 +118,9 @@ public class DayFrame extends JFrame
     }
     
     /**
-     * An example of a method - replace this comment with your own
+     * Writes the note to the file notesFile.txt.
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param  s   the note to be written to the file
      */
     public void changeNotes( String s )
     {
@@ -146,10 +145,8 @@ public class DayFrame extends JFrame
 
     
     /**
-     * An example of a method - replace this comment with your own
+     * Reads the file notesFile.txt and prints the note to the text field.
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
      */
     public void updateNotes()
     {
@@ -171,10 +168,8 @@ public class DayFrame extends JFrame
     }
     
     /**
-     * An example of a method - replace this comment with your own
+     * Clears both the file notesFile.txt and the text field of all notes.
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
      */
     public void clearNotes()
     {

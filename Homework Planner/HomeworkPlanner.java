@@ -11,7 +11,7 @@ import java.awt.FlowLayout;
 
 
 /**
- * Keeps track of events and sets them to a date and time as well as notifies user of events.
+ * Keeps track of notes and sets them to a specific month and day.
  * 
  * @Andrew Souhrada
  * @04/13/16
@@ -31,7 +31,7 @@ public class HomeworkPlanner extends JFrame
     private FlowLayout lay = new FlowLayout();
     
     /**
-     * Constructor for objects of class HomeworkPlanner
+     * Constructor for objects of class HomeworkPlanner.
      */
     public HomeworkPlanner()
     {
@@ -52,10 +52,7 @@ public class HomeworkPlanner extends JFrame
     }
     
     /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * Main method that begins the program.
      */
     public static void main( String[] args )
     {
@@ -63,10 +60,7 @@ public class HomeworkPlanner extends JFrame
     }
     
     /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
+     * Creates the calendar grid layout of buttons for each day in a month.
      */
     public void createCalendar()
     {
@@ -81,10 +75,9 @@ public class HomeworkPlanner extends JFrame
     }
     
     /**
-     * An example of a method - replace this comment with your own
+     * Changes the days that the buttons in the calendar grid display.
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param  days   number of days in the selected month
      */
     public void updateCalendar( int days )
     {
