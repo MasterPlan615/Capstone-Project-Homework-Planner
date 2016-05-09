@@ -20,15 +20,9 @@ public class HomeworkPlanner extends JFrame
 {
     private static final int FRAME_WIDTH = 800;
     private static final int FRAME_HEIGHT = 800;
-    private Container pane = getContentPane();
-    private JButton day;
-    private DateFormatSymbols symbols = new DateFormatSymbols();
-    private String months[] = symbols.getMonths();
     private JComboBox<String> monthList;
     private ArrayList<JButton> grid = new ArrayList<JButton>();
-    private DayFrame df = new DayFrame();
-    private ActionListener butl = new DayListener();
-    private FlowLayout lay = new FlowLayout();
+    
     
     /**
      * Constructor for objects of class HomeworkPlanner.
@@ -36,9 +30,13 @@ public class HomeworkPlanner extends JFrame
     public HomeworkPlanner()
     {
         this.setSize( FRAME_WIDTH, FRAME_HEIGHT );
-        this.setLayout( this.lay );
+        FlowLayout lay = new FlowLayout();
+        this.setLayout( lay );
         
-        monthList = new JComboBox<String>( this.months );
+        DateFormatSymbols symbols = new DateFormatSymbols();
+        String months[] = symbols.getMonths();
+        
+        monthList = new JComboBox<String>( months );
         this.add( this.monthList );
         
         ActionListener monl = new MonthListener();
@@ -64,11 +62,13 @@ public class HomeworkPlanner extends JFrame
      */
     public void createCalendar()
     {
+        Container pane = getContentPane();
         pane.setLayout( new GridLayout( 7, 4 ) );
         for( int i = 0; i < 49; i++ )
         {
-            this.day = new JButton();
-            this.day.addActionListener( butl );
+            JButton day = new JButton();
+            ActionListener butl = new DayListener();
+            day.addActionListener( butl );
             this.grid.add( day );
             pane.add( day );
         }
@@ -97,6 +97,7 @@ public class HomeworkPlanner extends JFrame
         public void actionPerformed( ActionEvent event )
         {
             JButton bday = (JButton)event.getSource();
+            DayFrame df = new DayFrame();
             df.setVisible( true );
             df.updateDay( monthList.getSelectedItem().toString() ,bday.getText() );
         }
