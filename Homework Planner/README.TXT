@@ -3,7 +3,7 @@ PROJECT TITLE: Homework Planner
 PURPOSE OF PROJECT: To set notes on specific days in a specific month. The note will be displayed whenever the user
 clicks on that specific date that the note was set to. The user can also clear the note from the specific day.
 
-VERSION or DATE: 4/12/16 (Started) - 5/6/16 (Last version update)
+VERSION or DATE: 4/12/16 (Started) - 5/10/16 (Last version update)
 
 HOW TO START THIS PROJECT: Click on the main method for Homework Planner.
 
